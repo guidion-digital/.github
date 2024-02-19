@@ -1,0 +1,14 @@
+{
+  "name": "Node App Deployer",
+  "description": "Builds and deploys Node applications with Terrappy",
+  "iconName": "octicon rocket",
+  "categories": [
+    "Node",
+    "Terrappy",
+    "Terraform"
+  ],
+  "filePatterns": [
+    "package.json$",
+    "*.tf"
+  ]
+}
