@@ -6,9 +6,5 @@
     "Node",
     "Terrappy",
     "Terraform"
-  ],
-  "filePatterns": [
-    "package.json$",
-    "*.tf"
   ]
 }
