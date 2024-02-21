@@ -1,0 +1,15 @@
+{
+  "name": "Python App Deployer",
+  "description": "Builds and deploys Python applications with Terrappy",
+  "iconName": "octicon rocket",
+  "categories": [
+    "Python",
+    "Terrappy",
+    "Terraform"
+  ],
+  "filePatterns": [
+    "requirements.txt$",
+    "*.py",
+    "*.tf"
+  ]
+}
