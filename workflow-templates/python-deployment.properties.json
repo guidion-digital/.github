@@ -8,8 +8,8 @@
     "Terraform"
   ],
   "filePatterns": [
-    "requirements.txt$",
-    "*.py",
+    "dist/requirements.txt$",
+    "dist/*.py",
     "*.tf"
   ]
 }
