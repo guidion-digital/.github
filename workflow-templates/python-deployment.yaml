@@ -24,6 +24,7 @@ jobs:
           path: |
             dist
             *.tf
+          retention-days: 2
 
   deploy_prod:
     needs: build_and_test
@@ -35,7 +36,8 @@ jobs:
     with:
       organization: guidion
       workspace: FILL ME IN
-      approvers: FILL ME IN
-      source_dir: FILL ME IN
+      approvers: (OPTIONAL) FILL ME IN
+      source_dir: (OPTIONAL) FILL ME IN
+      retention-days: (OPTIONAL) FILL ME IN
     secrets:
       tfc_api_token: ${{ secrets.TFC_API_TOKEN_PROD }}
