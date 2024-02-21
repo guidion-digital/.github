@@ -2,26 +2,6 @@ name: Python App Deployer
 
 on:
   push:
-    inputs:
-      organization:
-        description: Name of the TFC organization you're deploying to
-        required: false
-        default: guidion
-        type: string
-      workspace:
-        description: Name of the TFC workspace we're using
-        required: true
-        type: string
-      approvers:
-        description: CSV of people allowed to approve this plan
-        required: false
-        default: afrazkhan
-        type: string
-      source_dir:
-        description: Name of the directory holding the source to be deployed
-        required: false
-        type: string
-        default: dist
     secrets:
       tfc_api_token:
         description: Token used to talk to Terraform Cloud
@@ -54,8 +34,8 @@ jobs:
     uses: guidion-digital/terrappy/.github/workflows/tfc-deploy.yaml@beta0.0.6
     with:
       organization: guidion
-      workspace: ${{ inputs.workspace }}
-      approvers: ${{ inputs.approvers }}
-      source_dir: ${{ inputs.source_dir }}
+      workspace: FILL ME IN
+      approvers: FILL ME IN
+      source_dir: FILL ME IN
     secrets:
       tfc_api_token: ${{ secrets.TFC_API_TOKEN_PROD }}

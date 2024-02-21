@@ -1,6 +1,11 @@
 name: Node App Deployer
 
-on: [push]
+on:
+  push:
+    secrets:
+      tfc_api_token:
+        description: Token used to talk to Terraform Cloud
+        required: true
 
 jobs:
   build_and_test:
@@ -35,7 +40,8 @@ jobs:
     uses: guidion-digital/terrappy/.github/workflows/tfc-deploy.yaml@beta0.0.6
     with:
       organization: guidion
-      workspace: constr-acc-api-app-x
-      approvers: afrazkhan
+      workspace: FILL ME IN
+      approvers: FILL ME IN
+      source_dir: FILL ME IN
     secrets:
       tfc_api_token: ${{ secrets.TFC_API_TOKEN_PROD }}
