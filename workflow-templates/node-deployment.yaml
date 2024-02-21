@@ -1,11 +1,6 @@
 name: Node App Deployer
 
-on:
-  push:
-    secrets:
-      tfc_api_token:
-        description: Token used to talk to Terraform Cloud
-        required: true
+on: [push]
 
 jobs:
   build_and_test:
