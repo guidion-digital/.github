@@ -34,7 +34,7 @@ jobs:
       issues: write
       contents: read
       pull-requests: write
-    uses: guidion-digital/terrappy/.github/workflows/tfc-deploy.yaml@beta0.0.7
+    uses: guidion-digital/terrappy/.github/workflows/tfc-deploy.yaml@beta0.0.8
     with:
       organization: guidion
       workspace: FILL ME IN
