@@ -1,10 +1,21 @@
-name: Python App Deployer
+# TODO: This is also nice for skipping certain unecessary runs
+# https://github.com/marketplace/actions/skip-duplicate-actions
 
-on: [push]
+name: Python App Environment Deployer
+
+on:
+  push:
+    branches:
+      - acc
+
+concurrency:
+  group: acc
 
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    environment: acc
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -12,6 +23,8 @@ jobs:
         run: |
           cd dist
           pip install -r requirements.txt --target libs
+      - name: Run tests
+        run: echo 'TODO :)'
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -21,18 +34,13 @@ jobs:
             *.tf
           retention-days: 2
 
-  deploy_prod:
+  deploy:
     needs: build_and_test
+    secrets: inherit
     permissions:
       issues: write
       contents: read
       pull-requests: write
-    uses: guidion-digital/terrappy/.github/workflows/tfc-deploy.yaml@beta0.0.8
+    uses: guidion-digital/terrappy/.github/workflows/tfc-deploy.yaml@beta0.0.25
     with:
-      organization: guidion
-      workspace: FILL ME IN
-      approvers: (OPTIONAL) FILL ME IN
-      source_dir: (OPTIONAL) FILL ME IN
-      retention-days: (OPTIONAL) FILL ME IN
-    secrets:
-      tfc_api_token: ${{ secrets.TFC_API_TOKEN_PROD }}
+      environment_name: acc
