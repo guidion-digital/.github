@@ -8,11 +8,10 @@ on:
     branches:
       - $default-branch
 
-concurrency:
-  group: $default-branch
-
 jobs:
   build_and_test:
+    concurrency:
+      group: $default-branch
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -33,6 +32,8 @@ jobs:
           retention-days: 2
 
   deploy:
+    concurrency:
+      group: $default-branch
     needs: build_and_test
     secrets: inherit
     permissions:

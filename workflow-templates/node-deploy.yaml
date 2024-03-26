@@ -3,13 +3,12 @@ name: Node App Environment Deployer
 on:
   push:
     branches:
-      - acc
-
-concurrency:
-  group: acc
+      - $default-branch
 
 jobs:
   build_and_test:
+    concurrency:
+      group: $default-branch
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -34,6 +33,8 @@ jobs:
           retention-days: 2
 
   deploy:
+    concurrency:
+      group: $default-branch
     needs: build_and_test
     secrets: inherit
     permissions:
@@ -42,5 +43,5 @@ jobs:
       pull-requests: write
     uses: guidion-digital/terrappy/.github/workflows/tfc-deploy-enterprise.yaml@beta0.0.27
     with:
-      environment_name: acc
+      environment_name: $default-branch
       tfc_workspace: FILL ME IN
