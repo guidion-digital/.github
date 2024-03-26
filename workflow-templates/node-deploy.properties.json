@@ -1,9 +1,10 @@
 {
-  "name": "Python App Deployer",
-  "description": "Builds and deploys a Python application to an environment with Terrappy",
+  "name": "Node App Deployer",
+  "description": "Builds and deploys a Node application to an environment with Terrappy",
   "iconName": "octicon rocket",
   "categories": [
-    "Python",
+    "Node",
+    "JavaScript",
     "Terrappy",
     "Terraform",
     "deployment"

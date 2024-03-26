@@ -1,28 +1,29 @@
-# TODO: This is also nice for skipping certain unecessary runs
-# https://github.com/marketplace/actions/skip-duplicate-actions
-
-name: Python App Environment Deployer
+name: Node App Environment Deployer
 
 on:
   push:
     branches:
-      - $default-branch
+      - acc
 
 concurrency:
-  group: $default-branch
+  group: acc
 
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: install dependencies and run tests
-        run: |
-          cd dist
-          pip install -r requirements.txt --target libs
-      - name: Run tests
-        run: echo 'TODO :)'
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: "npm"
+      - run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+          npm install
+      - run: npm run lint -- --max-warnings=0
+      - run: npm test
+      - run: npm run build
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -41,5 +42,5 @@ jobs:
       pull-requests: write
     uses: guidion-digital/terrappy/.github/workflows/tfc-deploy-enterprise.yaml@beta0.0.27
     with:
-      environment_name: $default-branch
+      environment_name: acc
       tfc_workspace: FILL ME IN
