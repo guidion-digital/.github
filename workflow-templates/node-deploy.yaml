@@ -1,4 +1,9 @@
-name: Node App Environment Deployer
+# This template's "test_and_build" job is geared for a Node app, but can be used
+# for any sort of application. Simply replace / adjust the steps in the
+# test_and_build job to run your tests and build jobs, keeping the
+# "Archive artifacts" the same
+
+name: (Node) App Environment Deployer
 
 on:
   push:
@@ -6,7 +11,7 @@ on:
       - $default-branch
 
 jobs:
-  build_and_test:
+  test_and_build:
     concurrency:
       group: $default-branch
     runs-on: ubuntu-latest
@@ -17,12 +22,16 @@ jobs:
         with:
           node-version: 18.x
           cache: "npm"
-      - run: |
+      - name: Install dependencies
+        run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
           npm install
-      - run: npm run lint -- --max-warnings=0
-      - run: npm test
-      - run: npm run build
+      - name: Lint
+        run: npm run lint -- --max-warnings=0
+      - name: Run tests
+        run: npm test
+      - name: Build
+        run: npm run build
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -35,13 +44,14 @@ jobs:
   deploy:
     concurrency:
       group: $default-branch
-    needs: build_and_test
+    needs: test_and_build
     secrets: inherit
     permissions:
+      actions: read
       issues: write
       contents: read
       pull-requests: write
-    uses: guidion-digital/terrappy/.github/workflows/tfc-deploy-enterprise.yaml@beta0.0.27
+    uses: guidion-digital/terrappy/.github/workflows/tfc-deploy-enterprise.yaml@alpha
     with:
       environment_name: $default-branch
       tfc_workspace: FILL ME IN

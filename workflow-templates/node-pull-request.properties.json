@@ -1,6 +1,6 @@
 {
-  "name": "Node App Deployer",
-  "description": "Builds and deploys a Node application to an environment with Terrappy",
+  "name": "Node App Tests",
+  "description": "Runs tests on the creation / modification of a pull request",
   "iconName": "octicon rocket",
   "categories": [
     "Node",
