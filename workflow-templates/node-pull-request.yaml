@@ -1,17 +1,18 @@
 # Runs tests on every pull request creation and update event.
 #
-# N.B. The 'test' job is referenced as a required status check in a repository's
-# branch protection rules by default, meaning you will not be able to merge to
-# the target branch this job fails
+# N.B. The test job can be referenced as a required status check in a
+# repository's branch protection rules, meaning you will not be able to merge to
+# the target branch this job fails.
 
-name: Test PRs
+name: Test PRs to acc
 
 on:
   pull_request:
+    branches: [acc]
     types: [opened, edited, synchronize]
 
 jobs:
-  test:
+  test-acc:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,7 +20,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: 'npm'
+          cache: "npm"
       - run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
           npm install
