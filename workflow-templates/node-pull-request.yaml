@@ -4,15 +4,15 @@
 # repository's branch protection rules, meaning you will not be able to merge to
 # the target branch this job fails.
 
-name: Test PRs to acc
+name: Test PRs to $default-branch
 
 on:
   pull_request:
-    branches: [acc]
+    branches: [$default-branch]
     types: [opened, edited, synchronize]
 
 jobs:
-  test-acc:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
