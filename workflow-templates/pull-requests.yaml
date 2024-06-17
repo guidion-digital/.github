@@ -1,0 +1,24 @@
+# Runs tests and builds for every pull request creation and update event.
+#
+# It is presumed that all PRs are intended to _ultimately_ end up in the
+# $default-branch, even if they are initially to other branches
+
+name: Run tests and build on PR
+
+on:
+  pull_request:
+    # Uncomment next line if you only want to run tests for your default branch
+    # branches: [$default-branch]
+    # Uncomment next line if you intend to run tests for all PRs (but not again
+    # for your produnction branch
+    # branches-ignore: ["prod"]
+    types: [opened, edited, synchronize]
+
+jobs:
+  test_and_build:
+    uses: ./.github/workflows/test-build.yaml
+    secrets: inherit
+    with:
+      environment_name: $default-branch
+      disable_artefacts: true
+      concurrency_name: $default-branch

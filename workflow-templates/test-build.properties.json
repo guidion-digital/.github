@@ -1,0 +1,17 @@
+{
+  "name": "Test Build",
+  "description": "Re-usable workflow to be used anywhere you need to build and test",
+  "iconName": "octicon rocket",
+  "categories": [
+    "Node",
+    "JavaScript",
+    "Terrappy",
+    "Terraform",
+    "deployment"
+  ],
+  "filePatterns": [
+    "^package.json$",
+    "dist/*.js",
+    "*.tf"
+  ]
+}

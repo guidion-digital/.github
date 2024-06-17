@@ -1,0 +1,17 @@
+{
+  "name": "Pull Requests",
+  "description": "Runs tests on the creation / modification of a pull request",
+  "iconName": "octicon rocket",
+  "categories": [
+    "Node",
+    "JavaScript",
+    "Terrappy",
+    "Terraform",
+    "deployment"
+  ],
+  "filePatterns": [
+    "^package.json$",
+    "dist/*.js",
+    "*.tf"
+  ]
+}

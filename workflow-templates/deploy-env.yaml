@@ -1,0 +1,35 @@
+# This template's "test_and_build" job is geared for a Node app, but can be used
+# for any sort of application. Simply replace / adjust the steps in the
+# test_and_build job to run your tests and build jobs, keeping the
+# "Archive artifacts" the same
+
+name: App Environment Deployer
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - $default-branch
+
+jobs:
+  test_and_build:
+    uses: ./.github/workflows/test-build.yaml
+    secrets: inherit
+    with:
+      environment_name: $default-branch
+
+  deploy:
+    concurrency:
+      group: $default-branch
+      cancel-in-progress: false
+    needs: test_and_build
+    secrets: inherit
+    permissions:
+      actions: read
+      issues: write
+      contents: read
+      pull-requests: write
+    uses: guidion-digital/terrappy/.github/workflows/tfc-deploy-enterprise.yaml@beta0.0.27
+    with:
+      environment_name: $default-branch
+      tfc_workspace: FILL ME IN
