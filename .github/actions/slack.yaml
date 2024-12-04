@@ -1,0 +1,31 @@
+name: Slack Deploy Message
+description: Sends a message to <slack_channel> for pipeline deploys
+inputs:
+  slack_channel:
+    description: Channel to send message to
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Send message
+      run: |
+        curl -H "Content-type: application/json" \
+          --data '{"channel":"${{ inputs.slack_channel }}","blocks":[{
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "A deploy for ${{ github.repository }} is has completed with the result: ${{ github.action_status }}"},
+                      "accessory": {
+                          "type": "button",
+                          "text": {
+                              "type": "plain_text",
+                              "text": "Go to the pipeline",
+                              "emoji": true
+                          },
+                          "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}",
+                          "action_id": "view-pipeline"
+                      }
+                    }]
+                  }' \
+          -H "Authorization: Bearer ${{ secrets.slack_token }}" \
+          -X POST https://slack.com/api/chat.postMessage
